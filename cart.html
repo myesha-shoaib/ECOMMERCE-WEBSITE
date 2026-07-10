@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Cart</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div data-shell="header"></div>
+    <main class="container section">
+        <div class="section-head">
+            <div><span class="eyebrow">Your bag</span>
+                <h2>Shopping cart</h2>
+            </div>
+        </div>
+        <div class="layout">
+            <div id="cartItems" class="card list"></div>
+            <aside class="card summary">
+                <h3>Order summary</h3>
+                <div class="summary-line"><span>Subtotal</span><b id="sub"></b></div>
+                <div class="summary-line"><span>Delivery</span><b id="delivery"></b></div>
+                <div class="summary-line total"><span>Total</span><b id="total"></b></div><button class="btn full"
+                    onclick="goCheckout()">Proceed to checkout</button>
+            </aside>
+        </div>
+    </main>
+    <div data-shell="footer"></div>
+    <script src="app.js"></script>
+    <script>addEventListener('DOMContentLoaded', renderCart)</script>
+</body>
+
+</html>

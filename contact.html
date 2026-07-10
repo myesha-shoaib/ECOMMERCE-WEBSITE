@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Contact</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div data-shell="header"></div>
+    <main class="container section">
+        <div class="section-head">
+            <div><span class="eyebrow">Support</span>
+                <h2>Contact us</h2>
+            </div>
+            <p>Send a message to sales or support.</p>
+        </div>
+        <div class="contact-grid">
+            <form class="card auth" onsubmit="submitContact(event)">
+                <div class="field"><label>Name</label><input id="contactName" required></div>
+                <div class="field"><label>Email</label><input id="contactEmail" type="email" required></div>
+                <div class="field"><label>Subject</label><input id="contactSubject" required></div>
+                <div class="field"><label>Message</label><textarea id="contactMessage" required></textarea></div><button
+                    class="btn full">Send message</button>
+            </form>
+            <div class="card auth"><span class="eyebrow">Customer care</span>
+                <h2>We are here to help</h2>
+                <p class="muted">Email: support@nexamart.demo</p>
+                <p class="muted">Phone: +92 300 1234567</p>
+                <p class="muted">Hours: Monday–Saturday, 9:00 AM–8:00 PM</p>
+                <div class="notice">This is a frontend demo. Submitted messages are saved in localStorage.</div>
+            </div>
+        </div>
+    </main>
+    <div data-shell="footer"></div>
+    <script src="app.js"></script>
+</body>
+
+</html>

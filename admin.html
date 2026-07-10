@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Admin</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div data-shell="header"></div>
+    <main class="container section">
+        <div id="adminStats" class="dashboard-grid"></div>
+        <div class="section-head">
+            <div><span class="eyebrow">Management</span>
+                <h2>Product manager</h2>
+            </div>
+            <p>Frontend demo admin using localStorage.</p>
+        </div>
+        <form class="card auth" style="max-width:900px" onsubmit="saveAdmin(event)"><input id="adminId" type="hidden">
+            <div class="grid grid-3">
+                <div class="field"><label>Name</label><input id="adminName" required></div>
+                <div class="field"><label>Category</label><input id="adminCategory" required></div>
+                <div class="field"><label>Price</label><input id="adminPrice" type="number" required></div>
+                <div class="field"><label>Stock</label><input id="adminStock" type="number" required></div>
+                <div class="field"><label>Rating</label><input id="adminRating" type="number" step=".1" required></div>
+                <div class="field"><label>Badge</label><input id="adminBadge" required></div>
+            </div>
+            <div class="field"><label>Image URL</label><input id="adminImage" required></div>
+            <div class="field"><label>Description</label><textarea id="adminDescription" required></textarea></div>
+            <button class="btn full">Save product</button>
+        </form>
+        <div class="card" style="margin-top:24px">
+            <div id="adminList"></div>
+        </div>
+    </main>
+    <div data-shell="footer"></div>
+    <script src="app.js"></script>
+    <script>addEventListener('DOMContentLoaded', renderAdmin)</script>
+</body>
+
+</html>

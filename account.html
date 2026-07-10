@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Account</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div data-shell="header"></div>
+    <main class="container section">
+        <div id="accountBox"></div>
+        <div id="dashboardMetrics" class="dashboard-grid"></div>
+        <div class="section-head" style="margin-top:55px">
+            <div><span class="eyebrow">Address book</span>
+                <h2>Saved addresses</h2>
+            </div>
+        </div>
+        <form class="card auth" onsubmit="saveAddress(event)">
+            <div class="grid grid-3">
+                <div class="field"><label>Label</label><input id="addrTitle" placeholder="Home / Office" required></div>
+                <div class="field"><label>Name</label><input id="addrName" required></div>
+                <div class="field"><label>Phone</label><input id="addrPhone" required></div>
+                <div class="field"><label>City</label><input id="addrCity" required></div>
+            </div>
+            <div class="field"><label>Complete address</label><textarea id="addrText" required></textarea></div><button
+                class="btn">Save address</button>
+        </form>
+        <div id="addressGrid" class="address-grid" style="margin-top:20px"></div>
+        <div class="section-head" style="margin-top:55px">
+            <div><span class="eyebrow">History</span>
+                <h2>Your orders</h2>
+            </div>
+        </div>
+        <div id="orders" class="grid grid-3"></div>
+    </main>
+    <div data-shell="footer"></div>
+    <script src="app.js"></script>
+    <script>addEventListener('DOMContentLoaded', () => { renderAccount(); renderOrders() })</script>
+</body>
+
+</html>

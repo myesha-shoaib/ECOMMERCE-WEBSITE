@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>NexaMart</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div data-shell="header"></div>
+    <main>
+        <section class="container hero">
+            <div><span class="eyebrow">Modern commerce, simplified</span>
+                <h1>A real-world shopping experience.</h1>
+                <p>Multi-page storefront with products, wishlist, account, checkout, saved addresses, reviews, tracking,
+                    invoices, support and admin management.</p>
+                <div style="display:flex;gap:12px"><a class="btn" href="shop.html">Shop now</a><a class="btn secondary"
+                        href="login.html">Login</a></div>
+            </div>
+            <div class="hero-card"><img
+                    src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1200&q=80">
+            </div>
+        </section>
+        <section class="container section">
+            <div class="grid grid-4">
+                <div class="card tool">🚚<h3>Fast Delivery</h3>
+                    <p class="muted">Free delivery above Rs. 10,000.</p>
+                </div>
+                <div class="card tool">↩️<h3>Easy Returns</h3>
+                    <p class="muted">Simple 7-day return workflow.</p>
+                </div>
+                <div class="card tool">📍<h3>Order Tracking</h3>
+                    <p class="muted">Track Processing, Packed, Shipped and Delivered.</p>
+                </div>
+                <div class="card tool">⭐<h3>Product Reviews</h3>
+                    <p class="muted">Logged-in customers can submit reviews.</p>
+                </div>
+            </div>
+        </section>
+        <section class="container section">
+            <div class="section-head">
+                <div><span class="eyebrow">Popular now</span>
+                    <h2>Featured products</h2>
+                </div>
+                <p>Realistic products, pricing, stock, ratings and category data.</p>
+            </div>
+            <div id="featured" class="grid grid-4"></div>
+        </section>
+        <section class="container section">
+            <div class="section-head">
+                <div><span class="eyebrow">Your browsing</span>
+                    <h2>Recently viewed</h2>
+                </div>
+            </div>
+            <div id="recentGrid" class="grid grid-4"></div>
+        </section>
+        <section class="container section">
+            <div class="card auth"><span class="eyebrow">Member benefits</span>
+                <h2>Join the NexaMart newsletter</h2>
+                <p class="muted">Receive product launches, restock alerts and special offers.</p>
+                <form class="newsletter" onsubmit="subscribeNewsletter(event)"><input id="newsEmail" type="email"
+                        required placeholder="Enter your email"><button class="btn">Subscribe</button></form>
+            </div>
+        </section>
+    </main>
+    <div data-shell="footer"></div>
+    <script src="app.js"></script>
+    <script>addEventListener('DOMContentLoaded', () => { renderFeatured(); renderRecent() })</script>
+</body>
+
+</html>
