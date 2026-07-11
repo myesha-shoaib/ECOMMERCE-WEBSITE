@@ -13,8 +13,150 @@ const seed = [
     { id: 12, name: 'Skin Care Essentials', category: 'Beauty', price: 5499, stock: 12, rating: 4.6, badge: 'Care', image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80', description: 'Daily skin care bundle for cleansing and hydration.' }
 ];
 const LS = { get: (k, f) => JSON.parse(localStorage.getItem(k) || JSON.stringify(f)), set: (k, v) => localStorage.setItem(k, JSON.stringify(v)) };
-function init() { if (!localStorage.getItem('products')) LS.set('products', seed); injectShell(); updateBadges(); }
-function injectShell() { const h = document.querySelector('[data-shell="header"]'); const f = document.querySelector('[data-shell="footer"]'); if (h) h.innerHTML = `<header class="header"><div class="container nav"><a class="brand" href="index.html">Nexa<span>Mart</span></a><nav class="links"><a href="index.html">Home</a><a href="shop.html">Shop</a><a href="wishlist.html">Wishlist</a><a href="account.html">Account</a><a href="track.html">Track</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a><a href="admin.html">Admin</a></nav><div class="actions"><button class="icon" onclick="toggleTheme()">◐</button><a class="icon" href="wishlist.html">♥ <span class="badge" id="wishCount">0</span></a><a class="icon" href="cart.html">Cart <span class="badge" id="cartCount">0</span></a></div></div></header>`; if (f) f.innerHTML = `<footer class="footer"><div class="container row"><div><strong>NexaMart</strong><div>Real-world frontend demo using HTML, CSS and JavaScript.</div></div><div>© 2026</div></div></footer>`; if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark'); }
+function init() {
+    if (!localStorage.getItem('products')) {
+        LS.set('products', seed);
+    }
+
+    injectShell();
+    initMobileMenu();
+    updateBadges();
+}
+function injectShell() {
+    const headerShell = document.querySelector('[data-shell="header"]');
+    const footerShell = document.querySelector('[data-shell="footer"]');
+
+    if (headerShell) {
+        headerShell.innerHTML = `
+            <header class="header">
+                <div class="container nav">
+
+                    <a class="brand" href="index.html">
+                        Nexa<span>Mart</span>
+                    </a>
+
+                    <button
+                        class="menu-toggle"
+                        id="menu-toggle"
+                        type="button"
+                        aria-label="Open navigation menu"
+                        aria-expanded="false"
+                    >
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+
+                    <nav class="links" id="main-nav">
+                        <a href="index.html">Home</a>
+                        <a href="shop.html">Shop</a>
+                        <a href="wishlist.html">Wishlist</a>
+                        <a href="account.html">Account</a>
+                        <a href="track.html">Track</a>
+                        <a href="faq.html">FAQ</a>
+                        <a href="contact.html">Contact</a>
+                        <a href="admin.html">Admin</a>
+                    </nav>
+
+                    <div class="actions">
+                        <button
+                            class="icon theme-button"
+                            type="button"
+                            onclick="toggleTheme()"
+                            aria-label="Change theme"
+                        >
+                            ◐
+                        </button>
+
+                        <a
+                            class="icon wishlist-button"
+                            href="wishlist.html"
+                            aria-label="Wishlist"
+                        >
+                            ♥
+                            <span class="badge" id="wishCount">0</span>
+                        </a>
+
+                        <a
+                            class="icon cart-button"
+                            href="cart.html"
+                            aria-label="Shopping cart"
+                        >
+                            Cart
+                            <span class="badge" id="cartCount">0</span>
+                        </a>
+                    </div>
+
+                </div>
+            </header>
+        `;
+    }
+
+    if (footerShell) {
+        footerShell.innerHTML = `
+            <footer class="footer">
+                <div class="container row">
+                    <div>
+                        <strong>NexaMart</strong>
+                        <div>
+                            Real-world frontend demo using HTML, CSS and JavaScript.
+                        </div>
+                    </div>
+
+                    <div>© 2026</div>
+                </div>
+            </footer>
+        `;
+    }
+
+    if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark');
+    }
+}
+function initMobileMenu() {
+    const menuToggle = document.getElementById('menu-toggle');
+    const mainNav = document.getElementById('main-nav');
+
+    if (!menuToggle || !mainNav) {
+        return;
+    }
+
+    menuToggle.addEventListener('click', function (event) {
+        event.stopPropagation();
+
+        const isOpen = mainNav.classList.toggle('open');
+
+        menuToggle.classList.toggle('active', isOpen);
+        menuToggle.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    mainNav.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', function () {
+            closeMobileMenu();
+        });
+    });
+
+    document.addEventListener('click', function (event) {
+        const clickedInsideMenu = mainNav.contains(event.target);
+        const clickedToggle = menuToggle.contains(event.target);
+
+        if (!clickedInsideMenu && !clickedToggle) {
+            closeMobileMenu();
+        }
+    });
+
+    window.addEventListener('resize', function () {
+        if (window.innerWidth > 899) {
+            closeMobileMenu();
+        }
+    });
+
+    function closeMobileMenu() {
+        mainNav.classList.remove('open');
+        menuToggle.classList.remove('active');
+        menuToggle.setAttribute('aria-expanded', 'false');
+    }
+}
 function toggleTheme() { document.body.classList.toggle('dark'); localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light') }
 function money(v) { return 'Rs. ' + Number(v).toLocaleString('en-PK') }
 function toast(m) { let t = document.querySelector('.toast'); if (!t) { t = document.createElement('div'); t.className = 'toast'; document.body.appendChild(t) } t.textContent = m; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 1800) }
