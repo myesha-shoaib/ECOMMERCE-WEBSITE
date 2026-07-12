@@ -48,7 +48,7 @@ function injectShell() {
                     </button>
 
                     <nav class="links" id="main-nav">
-                        <a href="index.html">Home</a>
+                        <a href="index.html">Home</a>         
                         <a href="wishlist.html">Wishlist</a>
                         <a href="account.html">Account</a>
                         <a href="track.html">Track</a>
