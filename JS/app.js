@@ -223,3 +223,103 @@ function subscribeNewsletter(e) { e.preventDefault(); const email = newsEmail.va
 function submitContact(e) { e.preventDefault(); LS.set('contacts', [{ id: Date.now(), name: contactName.value, email: contactEmail.value, subject: contactSubject.value, message: contactMessage.value, status: 'New' }, ...contacts()]); e.target.reset(); toast('Message sent successfully') }
 function renderAdminStats() { const el = document.getElementById('adminStats'); if (!el) return; el.innerHTML = `<div class="card metric"><span>Products</span><strong>${products().length}</strong></div><div class="card metric"><span>Orders</span><strong>${orders().length}</strong></div><div class="card metric"><span>Subscribers</span><strong>${subscriptions().length}</strong></div><div class="card metric"><span>Messages</span><strong>${contacts().length}</strong></div>` }
 function renderAdmin() { const box = document.getElementById('adminList'); box.innerHTML = products().map(p => `<div class="admin-row"><img src="${p.image}"><div><strong>${p.name}</strong><div class="muted">${p.category} · ${money(p.price)} · Stock ${p.stock}</div></div><div><button class="btn secondary" onclick="editAdmin(${p.id})">Edit</button> <button class="btn danger" onclick="deleteAdmin(${p.id})">Delete</button></div></div>`).join(''); renderAdminStats() }
+function renderShop() {
+    const productGrid = document.getElementById("productGrid");
+    const results = document.getElementById("results");
+
+    if (!productGrid) return;
+
+    const searchValue =
+        document.getElementById("q")?.value.toLowerCase() || "";
+
+    const categoryValue =
+        document.getElementById("cat")?.value || "all";
+
+    const sortValue =
+        document.getElementById("sort")?.value || "default";
+
+    const maxPrice =
+        Number(document.getElementById("max")?.value || 50000);
+
+    let products = LS.get("products", seed);
+
+    products = products.filter((product) => {
+        const matchesSearch =
+            product.name.toLowerCase().includes(searchValue) ||
+            product.description.toLowerCase().includes(searchValue);
+
+        const matchesCategory =
+            categoryValue === "all" ||
+            product.category === categoryValue;
+
+        const matchesPrice = product.price <= maxPrice;
+
+        return matchesSearch && matchesCategory && matchesPrice;
+    });
+
+    if (sortValue === "low") {
+        products.sort((a, b) => a.price - b.price);
+    }
+
+    if (sortValue === "high") {
+        products.sort((a, b) => b.price - a.price);
+    }
+
+    if (sortValue === "rating") {
+        products.sort((a, b) => b.rating - a.rating);
+    }
+
+    results.textContent = `${products.length} products`;
+
+    productGrid.innerHTML = products
+        .map(
+            (product) => `
+            <article class="product-card">
+                <img
+                    src="${product.image}"
+                    alt="${product.name}"
+                    class="product-image"
+                >
+
+                <div class="product-content">
+                    <div class="product-top">
+                        <span class="product-badge">
+                            ${product.badge}
+                        </span>
+
+                        <button
+                            class="wishlist-btn"
+                            onclick="addToWishlist(${product.id})"
+                            type="button"
+                        >
+                            ♡
+                        </button>
+                    </div>
+
+                    <h3>${product.name}</h3>
+
+                    <p class="product-meta">
+                        ${product.category} · ★ ${product.rating}
+                    </p>
+
+                    <p>${product.description}</p>
+
+                    <div class="product-bottom">
+                        <strong>
+                            Rs. ${product.price.toLocaleString()}
+                        </strong>
+
+                        <button
+                            onclick="addToCart(${product.id})"
+                            type="button"
+                        >
+                            Add to cart
+                        </button>
+                    </div>
+                </div>
+            </article>
+        `
+        )
+        .join("");
+}
+document.addEventListener("DOMContentLoaded", init);
